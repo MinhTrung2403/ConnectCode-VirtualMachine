@@ -1,0 +1,42 @@
+String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+String url = "jdbc:sqlserver://localhost:1433; databaseName=DANGNHAP";
+String user = "sa";
+String password = "123456789"
+Statement st;
+ResultSet rs;
+
+
+
+
+encryot=true; trustServerCertificate=true;
+
+
+        int dk=JOptionPane.showConfirmDialog(this, "Bạn có muốn đăng ký không?", "confirm", JOptionPane.YES_OPTION);
+        if (dk!=JOptionPane.YES_OPTION){
+            return;
+        }
+        try{
+            Class.forName(driver);
+            Connection con=DriverManager.getConnection(url,user,password);
+            String sql="insert into ACCOUNT value (?,?,?,?)";
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setString(1,txtuser.getText());
+            ps.setString(2, txtmail.getText());
+            ps.setString(3, Pass.getText());
+            ps.setString(4, PassCof.getText());
+            
+            int n=ps.executeUpdate();
+            
+            if(txtuser.getText().equals("")|txtmail.getText().equals("")|Pass.getText().equals("")|PassCof.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Không để thông tin trống");
+            }
+            else if(n!=0){
+                JOptionPane.showMessageDialog(this, "Đăng kí thành công");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Đăng kí thất bại");
+            }
+                    
+        }catch (Exception e){  
+            e.printStackTrace();
+        }
